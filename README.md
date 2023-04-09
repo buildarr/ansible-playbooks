@@ -82,7 +82,7 @@ The application containers all have ports mapped to `localhost` to allow access 
 
 The defaults for the Ansible role are stored in `roles/arrstack/defaults/main.yml`.
 
-Any configuration parameter not located here are generally located in the template files, and can be modified before deployed:
+Any configuration parameter not located here are generally located in the template files, and can be modified before being deployed:
 
 * `roles/arrstack/templates/docker-compose.yml.j2` - Arr stack Docker Compose file template
 * `roles/arrstack/templates/buildarr.yml.j2` - Buildarr base configuration file template
@@ -108,7 +108,7 @@ Once deployment is complete, you can open the Sonarr instances in your browser a
 * Sonarr for 4K TV shows: http://localhost:8990
 * Sonarr for anime series: http://localhost:8991
 
-When adding sereis to any Sonarr instance, they will communicate with Prowlarr to search for releases, and then set them for download on Transmission.
+When adding a series to any Sonarr instance, they will communicate with Prowlarr to search for releases, and then set them for download on Transmission.
 
 Once done, the Sonarr instances will hardlink the downloaded files to the destination media folders, making them available for any Jellyfin/Emby/Plex instance watching them.
 
@@ -130,6 +130,6 @@ Prowlarr is also configured to require at least 5 seeders for a grab, which eith
 
 Try changing the configuration for the Sonarrs/Prowlarr in the Buildarr configuration file to better match your needs.
 
-Once the changes are redeployed to the host using the Ansible command, Buildarr will automatically pick up the changess and update the Sonarr instances.
+Once the changes are redeployed to the host using the Ansible command, Buildarr will automatically pick up the changes and update the Sonarr instances.
 
 If you have any suggestions for better configuration defaults for the Ansible playbook, please let me know by creating a GitHub issue or pull request!
