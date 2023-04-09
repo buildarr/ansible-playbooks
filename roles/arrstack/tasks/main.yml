@@ -1,0 +1,129 @@
+---
+
+- name: Set Arr stack default timezone (if not set manually)
+  block:
+    - name: Fetch target host timezone
+      ansible.builtin.slurp:
+        src: /etc/timezone
+      register: arrstack_timezone_b64
+    - name: Set Arr stack timezone fact
+      ansible.builtin.set_fact:
+        arrstack_timezone: "{{ (arrstack_timezone_b64['content'] | b64decode).strip() }}"
+  when: arrstack_timezone is not defined
+
+- name: Create Arr stack environment directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ arrstack_env_dir }}"
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Create Arr stack data directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ arrstack_data_dir }}"
+    owner: "{{ arrstack_data_dir_owner }}"
+    group: "{{ arrstack_data_dir_group }}"
+    mode: 0770
+  when: arrstack_data_dir_create
+
+- name: Create Arr stack data subdirectories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ arrstack_data_dir }}/{{ item }}"
+    owner: "{{ arrstack_data_dir_owner }}"
+    group: "{{ arrstack_data_dir_group }}"
+    mode: 0770
+  loop:
+    - torrents
+    - torrents/shows/hd
+    - torrents/shows/4k
+    - torrents/shows/anime
+    - media
+    - media/shows
+    - media/anime
+  when: arrstack_data_dir_create
+
+- name: Create Docker Compose environment file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/arrstack/docker-compose.yml
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Start all Docker Compose services except for Buildarr
+  community.docker.docker_compose:
+    project_name: arrstack
+    project_src: /opt/arrstack
+    services:
+      - transmission
+      - flaresolverr
+      - sonarr-hd
+      - sonarr-4k
+      - sonarr-anime
+      - prowlarr
+
+- name: Wait for all Docker Compose services to be accessible
+  ansible.builtin.uri:
+    url: "{{ item }}"
+    status_code:
+      - 200
+      - 302
+  register: "arrstack_service_test"
+  until: "arrstack_service_test is not failed"
+  retries: 300
+  delay: 1
+  loop:
+    - "http://localhost:9091"
+    - "http://localhost:8191"
+    - "http://localhost:8989"
+    - "http://localhost:8990"
+    - "http://localhost:8991"
+    - "http://localhost:9696"
+
+- name: Fetch API keys for all Buildarr-managed instances
+  ansible.builtin.command:
+    argv:
+      - "sed"
+      - "-nE"
+      - 's,.*<ApiKey>([A-Za-z0-9]+)</ApiKey>.*,\1,p'
+      - "/opt/arrstack/{{ item }}/config.xml"
+  register: "arrstack_instance_apikeys_raw"
+  loop:
+    - sonarr-hd
+    - sonarr-4k
+    - sonarr-anime
+    - prowlarr
+
+- name: Parse Buildarr-managed instance API keys
+  ansible.builtin.set_fact:
+    arrstack_instance_apikeys: "{{ arrstack_instance_apikeys | default({}) | combine({item.item: item.stdout}) }}"
+  no_log: true
+  loop: "{{ arrstack_instance_apikeys_raw.results }}"
+
+- name: Create Buildarr volume directory
+  ansible.builtin.file:
+    state: directory
+    path: /opt/arrstack/buildarr
+    owner: "{{ arrstack_volume_dir_owner }}"
+    group: "{{ arrstack_volume_dir_group }}"
+    mode: 0770
+
+- name: Create Buildarr configuration files
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/opt/arrstack/buildarr/{{ item }}"
+    owner: root
+    group: "{{ arrstack_volume_dir_group }}"
+    mode: 0640
+  loop:
+    - buildarr.yml
+    - sonarr.yml
+    - prowlarr.yml
+
+- name: Start all Docker Compose services
+  community.docker.docker_compose:
+    project_name: arrstack
+    project_src: /opt/arrstack
