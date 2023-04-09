@@ -8,7 +8,7 @@
       register: arrstack_timezone_b64
     - name: Set Arr stack timezone fact
       ansible.builtin.set_fact:
-        arrstack_timezone: "{{ arrstack_timezone_b64['content'] | b64decode }}"
+        arrstack_timezone: "{{ (arrstack_timezone_b64['content'] | b64decode).strip() }}"
   when: arrstack_timezone is not defined
 
 - name: Create Arr stack environment directory
