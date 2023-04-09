@@ -1,5 +1,11 @@
 ---
 
+- name: Determine Arr stack timezone (if not set manually)
+  ansible.builtin.slurp:
+    src: /etc/timezone
+  register: arrstack_timezone
+  when: arrstack_timezone is not defined
+
 - name: Create Arr stack environment directory
   ansible.builtin.file:
     state: directory
