@@ -1,7 +1,7 @@
 ---
 
 - name: Setup Arr stack with Buildarr
-  hosts: "{{ target }}"
+  hosts: all
   become: true
   roles:
     - arrstack
