@@ -46,7 +46,7 @@ The following services are deployed in this playbook:
     * `nyaa.si` (for anime)
 * One FlareSolverr instance (`flaresolverr`) for proxying Prowlarr indexer requests to `1337`
 * One Transmission instance (`transmission`) for downloading releases, configured on each Sonarr and Prowlarr
-* One Buildarr instance (`builarr`) for managing the configuration for each Sonarr and Prowlarr
+* One Buildarr instance (`buildarr`) for managing the configuration for each Sonarr and Prowlarr
 
 By default the Arr stack is deployed to `/opt/arrstack`, with the below folder structure. This is partially based on the [TRaSH-Guides guide](https://trash-guides.info/Hardlinks/How-to-setup-for/Docker) for configuring an Arr stack environment for hardlinking.
 
