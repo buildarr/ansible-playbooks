@@ -55,8 +55,8 @@ prowlarr:
                 sync_profile: "Standard"
                 redirect: false
                 priority: 25
-                grab_limit: 13
-                query_limit: 48
+                grab_limit: {{ arrstack_prowlarr_grab_limit }}
+                query_limit: {{ arrstack_prowlarr_query_limit }}
                 tags:
                   - "shows"
                 fields:
@@ -67,8 +67,8 @@ prowlarr:
                 sync_profile: "Standard"
                 redirect: false
                 priority: 25
-                grab_limit: 13
-                query_limit: 48
+                grab_limit: {{ arrstack_prowlarr_grab_limit }}
+                query_limit: {{ arrstack_prowlarr_query_limit }}
                 tags:
                   - "anime-shows"
                 fields:

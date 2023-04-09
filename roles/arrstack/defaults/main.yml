@@ -12,6 +12,10 @@ arrstack_flaresolverr_container_tag: "v3.1.2"
 arrstack_transmission_container_uri: "lscr.io/linuxserver/transmission"
 arrstack_transmission_container_tag: "version-3.00-r8"
 
+# Arr stack Prowlarr configuration.
+arrstack_prowlarr_grab_limit: 26
+arrstack_prowlarr_query_limit: 256
+
 # Arr stack environment directory location.
 arrstack_env_dir: "/opt/arrstack"
 
