@@ -122,6 +122,10 @@ These values can either be set in the templates themselves, or changed using the
 
 The configuration for the Sonarrs are mostly based off of the [TRaSH-Guides](https://trash-guides.info/Sonarr) recommended defaults, and there is a high chance that they are not optimal for your use case.
 
-Try changing the configuration for the Sonarrs in the Buildarr configuration file to better match your needs.
+Prowlarr is also configured to require at least 5 seeders for a grab, which either may not be enough, or too much for some less popular series.
+
+Try changing the configuration for the Sonarrs/Prowlarr in the Buildarr configuration file to better match your needs.
 
 Once the changes are redeployed to the host using the Ansible command, Buildarr will automatically pick up the changess and update the Sonarr instances.
+
+If you have any suggestions for better configuration defaults for the Ansible playbook, please let me know by creating a GitHub issue or pull request!
