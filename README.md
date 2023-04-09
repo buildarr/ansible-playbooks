@@ -120,7 +120,7 @@ These values can either be set in the templates themselves, or changed using the
 
 #### Sonarr is not downloading files/not downloading the right files
 
-The configuration for the Sonarrs are mostly based off of the [TRaSH-Guides](https://trash-guides.info/Sonarr) recommended defaults, and there is a high chance that they are not optimal for your use case.
+The configuration for the Sonarrs is mostly based off of the [TRaSH-Guides](https://trash-guides.info/Sonarr) recommended defaults, and there is a high chance that it is not optimal for your use case.
 
 Prowlarr is also configured to require at least 5 seeders for a grab, which either may not be enough, or too much for some less popular series.
 
