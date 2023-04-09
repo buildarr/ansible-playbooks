@@ -1,9 +1,14 @@
 ---
 
-- name: Determine Arr stack timezone (if not set manually)
-  ansible.builtin.slurp:
-    src: /etc/timezone
-  register: arrstack_timezone
+- name: Set Arr stack default timezone (if not set manually)
+  block:
+    - name: Fetch target host timezone
+      ansible.builtin.slurp:
+        src: /etc/timezone
+      register: arrstack_timezone_b64
+    - name: Set Arr stack timezone fact
+      ansible.builtin.set_fact:
+        arrstack_timezone: "{{ arrstack_timezone_b64['content'] | b64decode }}"
   when: arrstack_timezone is not defined
 
 - name: Create Arr stack environment directory
