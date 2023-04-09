@@ -11,6 +11,10 @@ These playbooks show how you can implement:
 * Templating the Buildarr configuration file, **including automatic retrieval of API keys**
 * Deploying the Arr stack applications, and starting Buildarr to configure them *after* ensuring they are accessible
 
+Please note that the settings of the Sonarr and Prowlarr within this playbook may not be optimal for your use case, as they are mostly standard settings with some defaults set from TRaSH-Guides.
+
+The focus of these playbooks is demontrating the deployment method, and less on the usability of the applications themselves, at this stage.
+
 ## Prerequisites
 
 On the Ansible host machine:
