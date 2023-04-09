@@ -1,0 +1,19 @@
+---
+
+# Arr stack environment directory location.
+arrstack_env_dir: "/opt/arrstack"
+
+# Arr stack data directory location, and ownership information, if created by the role.
+arrstack_data_dir: "/opt/arrstack/data"
+arrstack_data_dir_create: true
+arrstack_data_dir_owner: 1000
+arrstack_data_dir_group: 1000
+
+# Owner and group for volume directories within the Arr stack environment directory.
+# Usually this should be the same as the data directory, to give the applications
+# write access to the data directory.
+arrstack_volume_dir_owner: "{{ arrstack_data_dir_owner }}"
+arrstack_volume_dir_group: "{{ arrstack_data_dir_group }}"
+
+# Arr stack service container timezone setting.
+arrstack_timezone: "{{ ansible_date_time.tz }}"

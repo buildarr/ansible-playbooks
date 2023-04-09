@@ -1,0 +1,157 @@
+---
+# Prowlarr instance configuration in Buildarr.
+
+prowlarr:
+
+  # Configuration common to all instances.
+  port: 9696
+  protocol: "http"
+  settings:
+    general:
+      host:
+        bind_address: "*"
+        port: 9696
+        url_base: null
+        use_ssl: false
+      proxy:
+        enable: false
+      logging:
+        log_level: "INFO"
+      analytics:
+        send_anonymous_usage_data: false
+      updates:
+        branch: "master"
+        automatic: false
+        mechanism: "docker"
+      backup:
+        folder: "Backups"
+        interval: 7
+        retention: 28
+    ui:
+      first_day_of_week: "monday"
+      week_column_header: "day-first"
+      short_date_format: "word-month-second"
+      long_date_format: "day-first"
+      time_format: "twentyfour-hour"
+      show_relative_dates: true
+      enable_color_impaired_mode: false
+      theme: "auto"
+      ui_language: "en"
+
+  # Instance-specific configuration.
+  instances:
+
+    # Main Prowlarr instance.
+    "prowlarr":
+      host: "prowlarr"
+      api_key: "{{ arrstack_instance_apikeys['prowlarr'] }}"
+      settings:
+        indexers:
+          indexers:
+            definitions:
+              "1337x":
+                type: "1337x"
+                enable: true
+                sync_profile: "Standard"
+                redirect: false
+                priority: 25
+                grab_limit: 13
+                query_limit: 48
+                tags:
+                  - "shows"
+                fields:
+                  torrentBaseSettings.seedRatio: 3
+              "Nyaa.si":
+                type: "nyaasi"
+                enable: true
+                sync_profile: "Standard"
+                redirect: false
+                priority: 25
+                grab_limit: 13
+                query_limit: 48
+                tags:
+                  - "anime-shows"
+                fields:
+                  torrentBaseSettings.seedRatio: 3
+                  prefer_magnet_links: true
+          proxies:
+            definitions:
+              "FlareSolverr":
+                type: "flaresolverr"
+                host_url: "http://flaresolverr:8191"
+                request_timeout: 60
+                tags:
+                  - "shows"
+        apps:
+          applications:
+            definitions:
+              "Sonarr (SD/HD Shows)":
+                type: "sonarr"
+                instance_name: "sonarr-hd"
+                prowlarr_url: "http://prowlarr:9696"
+                base_url: "http://sonarr-hd:8989"
+                sync_level: "full-sync"
+                sync_categories:
+                  - "TV/WEB-DL"
+                  - "TV/Foreign"
+                  - "TV/SD"
+                  - "TV/HD"
+                  - "TV/Other"
+                anime_sync_categories: []
+                tags:
+                  - "shows"
+              "Sonarr (4K Shows)":
+                type: "sonarr"
+                instance_name: "sonarr-4k"
+                prowlarr_url: "http://prowlarr:9696"
+                base_url: "http://sonarr-4k:8989"
+                sync_level: "full-sync"
+                sync_categories:
+                  - "TV/WEB-DL"
+                  - "TV/Foreign"
+                  - "TV/UHD"
+                  - "TV/Other"
+                anime_sync_categories: []
+                tags:
+                  - "shows"
+              "Sonarr (Anime Shows)":
+                type: "sonarr"
+                instance_name: "sonarr-anime"
+                prowlarr_url: "http://prowlarr:9696"
+                base_url: "http://sonarr-anime:8989"
+                sync_level: "full-sync"
+                sync_categories:
+                  - "TV/Anime"
+                anime_sync_categories:
+                  - "TV/Anime"
+                tags:
+                  - "anime-shows"
+          sync_profiles:
+            definitions:
+              "Standard":
+                enable_rss: true
+                enable_interactive_search: true
+                enable_automatic_search: true
+                minimum_seeders: 1
+        download_clients:
+          definitions:
+            "Transmission (Prowlarr)":
+              type: "transmission"
+              enable: true
+              host: "transmission"
+              port: 9091
+              use_ssl: false
+              url_base: "/transmission/"
+              username: null
+              password: null
+              # category: "prowlarr"
+              directory: "/data/torrents/prowlarr"
+              client_priority: "last"
+              add_paused: false
+        tags:
+          definitions:
+            - "shows"
+            - "anime-shows"
+        general:
+          host:
+            instance_name: "Prowlarr"
