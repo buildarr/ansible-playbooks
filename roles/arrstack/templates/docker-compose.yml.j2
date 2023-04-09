@@ -7,7 +7,7 @@ services:
 
   # Transmission instance for downloading torrents.
   transmission:
-    image: lscr.io/linuxserver/transmission:version-3.00-r8
+    image: "{{ arrstack_transmission_container_uri }}:{{ arrstack_transmission_container_tag }}"
     hostname: transmission
     restart: always
     ports:
@@ -26,7 +26,7 @@ services:
 
   # FlareSolverr instance for bypassing CloudFlare.
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.1.2
+    image: "{{ arrstack_flaresolverr_container_uri }}:{{ arrstack_flaresolverr_container_tag }}"
     hostname: flaresolverr
     restart: always
     ports:
@@ -37,7 +37,7 @@ services:
 
   # Sonarr instance for grabbing HD/SD TV shows.
   sonarr-hd:
-    image: lscr.io/linuxserver/sonarr:3.0.10
+    image: "{{ arrstack_sonarr_container_uri }}:{{ arrstack_sonarr_container_tag }}"
     hostname: sonarr-hd
     restart: always
     ports:
@@ -56,7 +56,7 @@ services:
 
   # Sonarr instance for grabbing 4K TV shows.
   sonarr-4k:
-    image: lscr.io/linuxserver/sonarr:3.0.10
+    image: "{{ arrstack_sonarr_container_uri }}:{{ arrstack_sonarr_container_tag }}"
     hostname: sonarr-4k
     restart: always
     ports:
@@ -75,7 +75,7 @@ services:
 
   # Sonarr instance for grabbing anime series.
   sonarr-anime:
-    image: lscr.io/linuxserver/sonarr:3.0.10
+    image: "{{ arrstack_sonarr_container_uri }}:{{ arrstack_sonarr_container_tag }}"
     hostname: sonarr-anime
     restart: always
     ports:
@@ -94,7 +94,7 @@ services:
 
   # Prowlarr instance for managing indexers.
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.2.2
+    image: "{{ arrstack_prowlarr_container_uri }}:{{ arrstack_prowlarr_container_tag }}"
     hostname: prowlarr
     restart: always
     ports:
@@ -117,7 +117,7 @@ services:
 
   # Buildarr instance for managing instance configurations.
   buildarr:
-    image: callum027/buildarr:0.4.3
+    image: "{{ arrstack_buildarr_container_uri }}:{{ arrstack_buildarr_container_tag }}"
     hostname: buildarr
     restart: always
     volumes:

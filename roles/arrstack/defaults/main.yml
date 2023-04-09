@@ -1,5 +1,17 @@
 ---
 
+# Arr stack container URIs and tags.
+arrstack_buildarr_container_uri: "callum027/buildarr"
+arrstack_buildarr_container_tag: "0.4.3"
+arrstack_sonarr_container_uri: "lscr.io/linuxserver/sonarr"
+arrstack_sonarr_container_tag: "3.0.10"
+arrstack_prowlarr_container_uri: "lscr.io/linuxserver/prowlarr"
+arrstack_prowlarr_container_tag: "1.2.2"
+arrstack_flaresolverr_container_uri: "ghcr.io/flaresolverr/flaresolverr"
+arrstack_flaresolverr_container_tag: "v3.1.2"
+arrstack_transmission_container_uri: "lscr.io/linuxserver/transmission"
+arrstack_transmission__container_tag: "version-3.00-r8"
+
 # Arr stack environment directory location.
 arrstack_env_dir: "/opt/arrstack"
 
