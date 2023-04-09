@@ -98,7 +98,7 @@ To deploy the Arr Stack on a host of your choice, simply run the following comma
 ansible-playbook -i "<target host address>," arrstack.yml
 ```
 
-Ansible will take care of everything from creating the files and folders, to starting the containers and kicking off Buildarr to conigure them.
+Ansible will take care of everything from creating the files and folders, to starting the containers and kicking off Buildarr to configure them.
 
 ### Usage
 
