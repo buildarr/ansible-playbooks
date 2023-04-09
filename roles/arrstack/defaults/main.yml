@@ -32,5 +32,6 @@ arrstack_volume_dir_owner: "{{ arrstack_data_dir_owner }}"
 arrstack_volume_dir_group: "{{ arrstack_data_dir_group }}"
 
 # The following facts can also be defined:
-#   * `arrstack_timezone` - Arr stack service timezone (e.g. `Etc/UTC`).
-#     Default: Use target host timezone.
+#
+# * `arrstack_timezone` - Arr stack service timezone (e.g. `Etc/UTC`).
+#   Default: Use target host timezone.
