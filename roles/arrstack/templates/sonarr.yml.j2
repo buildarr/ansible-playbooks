@@ -16,11 +16,11 @@ sonarr:
         S{season:00}E{episode:00}
         -
         {Episode CleanTitle}
-        {[Quality Full]}
+        [{Preferred Words }{Quality Full}]
         {[MediaInfo VideoDynamicRangeType]}
         [{MediaInfo VideoBitDepth}bit]
         {[MediaInfo VideoCodec]}
-        [{Mediainfo AudioCodec} {Mediainfo AudioChannels}]
+        [{Mediainfo AudioCodec}{ Mediainfo AudioChannels}]
         {[MediaInfo AudioLanguages]}
         {[Release Group]}
         -
@@ -31,11 +31,11 @@ sonarr:
         {Air-Date}
         -
         {Episode CleanTitle}
-        {[Quality Full]}
+        [{Preferred Words }{Quality Full}]
         {[MediaInfo VideoDynamicRangeType]}
         [{MediaInfo VideoBitDepth}bit]
         {[MediaInfo VideoCodec]}
-        [{Mediainfo AudioCodec} {Mediainfo AudioChannels}]
+        [{Mediainfo AudioCodec}{ Mediainfo AudioChannels}]
         {[MediaInfo AudioLanguages]}
         {[Release Group]}
         -
@@ -48,11 +48,11 @@ sonarr:
         {absolute:000}
         -
         {Episode CleanTitle}
-        {[Quality Full]}
+        [{Preferred Words }{Quality Full}]
         {[MediaInfo VideoDynamicRangeType]}
         [{MediaInfo VideoBitDepth}bit]
         {[MediaInfo VideoCodec]}
-        [{Mediainfo AudioCodec} { Mediainfo AudioChannels}]
+        [{Mediainfo AudioCodec}{ Mediainfo AudioChannels}]
         {MediaInfo AudioLanguages}
         {[Release Group]}
         -
@@ -80,86 +80,19 @@ sonarr:
       #  - "/data"
     profiles:
       quality_profiles:
-        definitions:
-          "HD/SD Shows":
-            upgrades_allowed: true
-            upgrade_until: "Bluray-1080p"
-            qualities:
-              - "Bluray-1080p"
-              - name: "WEB 1080p"
-                members:
-                  - "WEBRip-1080p"
-                  - "WEBDL-1080p"
-              - "HDTV-1080p"
-              - "Bluray-720p"
-              - name: "WEB 720p"
-                members:
-                  - "WEBRip-720p"
-                  - "WEBDL-720p"
-              - "HDTV-720p"
-              - "Raw-HD"
-              - "Bluray-480p"
-              - "DVD"
-              - name: "WEB 480p"
-                members:
-                  - "WEBRip-480p"
-                  - "WEBDL-480p"
-              - "SDTV"
-          "4K Shows":
-            upgrades_allowed: true
-            upgrade_until: "Bluray-2160p"
-            qualities:
-              - "Bluray-2160p"
-              - name: "WEB 2160p"
-                members:
-                  - "WEBRip-2160p"
-                  - "WEBDL-2160p"
-              - "HDTV-2160p"
-          "HD/SD Anime Shows":
-            upgrades_allowed: true
-            upgrade_until: "Bluray-1080p Remux"
-            qualities:
-              - "Bluray-1080p Remux"
-              - "Bluray-1080p"
-              - name: "WEB 1080p"
-                members:
-                  - "WEBRip-1080p"
-                  - "WEBDL-1080p"
-              - "HDTV-1080p"
-              - "Bluray-720p"
-              - name: "WEB 720p"
-                members:
-                  - "WEBRip-720p"
-                  - "WEBDL-720p"
-              - "HDTV-720p"
-              - "Raw-HD"
-              - "Bluray-480p"
-              - "DVD"
-              - name: "WEB 480p"
-                members:
-                  - "WEBRip-480p"
-                  - "WEBDL-480p"
-              - "SDTV"
+        delete_unmanaged: true
       language_profiles:
-        definitions:
-          "English":
-            upgrades_allowed: false
-            languages:
-              - "English"
-          "Anime":
-            upgrades_allowed: true
-            upgrade_until: "Japanese"
-            languages:
-              - "Japanese"
-              - "English"
+        delete_unmanaged: true
       delay_profiles:
         definitions:
           - preferred_protocol: "torrent-prefer"
             usenet_delay: 0
-            torrent_delay: 0
+            torrent_delay: 1440
             bypass_if_highest_quality: true
+      release_profiles:
+        delete_unmanaged: true
     quality:
-      trash_id: "bef99584217af744e404ed44a33af589" # series
+      trash_id: "bef99584217af744e404ed44a33af589"  # series
     metadata:
       kodi_emby:
         enable: false
@@ -216,32 +149,71 @@ sonarr:
           root_folders:
             - "/data/media/shows"
         profiles:
+          quality_profiles:
+            definitions:
+              "HD/SD Shows":
+                upgrades_allowed: true
+                upgrade_until: "Bluray-1080p"
+                qualities:
+                  - "Bluray-1080p"
+                  - name: "WEB 1080p"
+                    members:
+                      - "WEBRip-1080p"
+                      - "WEBDL-1080p"
+                  - "HDTV-1080p"
+                  - "Bluray-720p"
+                  - name: "WEB 720p"
+                    members:
+                      - "WEBRip-720p"
+                      - "WEBDL-720p"
+                  - "HDTV-720p"
+                  - "Raw-HD"
+                  - "Bluray-480p"
+                  - "DVD"
+                  - name: "WEB 480p"
+                    members:
+                      - "WEBRip-480p"
+                      - "WEBDL-480p"
+                  - "SDTV"
+          language_profiles:
+            definitions:
+              "English":
+                upgrades_allowed: false
+                languages:
+                  - "English"
           release_profiles:
-            delete_unmanaged: true
             definitions:
               "Release Sources (Streaming Service)":
                 trash_id: 1B018E0C53EC825085DD911102E2CA36
+                strict_negative_scores: false
+                include_preferred_when_renaming: true
               "P2P Groups + Repack/Proper":
                 trash_id: 71899E6C303A07AF0E4746EFF9873532
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
               "Low Quality Groups":
                 trash_id: EBC725268D687D588A20CBC5F97E538B
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
               "Optionals":
                 trash_id: 76e060895c5b8a765c310933da0a5357
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
                 filter:
                   include:
-                    - fa47da3377076d82d07c4e95b3f13d07 # Prefer Dolby Vision (HDR)
-                    - bc7a6383cbe88c3ee2d6396e1aacc0b3 # Prefer HDR
-                    - ea83f4740cec4df8112f3d6dd7c82751 # Prefer Season Packs
-                    - 6f2aefa61342a63387f2a90489e90790 # Dislike renamed/retagged releases
-                    - 19cd5ecc0a24bf493a75e80a51974cdd # Dislike retagged/obfuscated groups
-                    - 6a7b462c6caee4a991a9d8aa38ce2405 # Dislike release ending: en
-                    - 236a3626a07cacf5692c73cc947bc280 # Dislike release containing: 1-
-                    - cec8880b847dd5d31d29167ee0112b57 # Ignore 720p/1080p HEVC re-encodes (Golden Rule)
-                    - 436f5a7d08fbf02ba25cb5e5dfe98e55 # Ignore Dolby Vision without HDR10 fallback
-                    - f3f0f3691c6a1988d4a02963e69d11f2 # Ignore The Group -SCENE
-                    - 5bc23c3a055a1a5d8bbe4fb49d80e0cb # Ignore so-called scene releases
-                    - 538bad00ee6f8aced8e0db5218b8484c # Ignore Bad Dual Audio Groups
-                    - 4861d8238f9234606df6721df6e27deb # Ignore AV1
+                    - fa47da3377076d82d07c4e95b3f13d07  # Prefer Dolby Vision (HDR)
+                    - bc7a6383cbe88c3ee2d6396e1aacc0b3  # Prefer HDR
+                    - ea83f4740cec4df8112f3d6dd7c82751  # Prefer Season Packs
+                    - 6f2aefa61342a63387f2a90489e90790  # Dislike renamed/retagged releases
+                    - 19cd5ecc0a24bf493a75e80a51974cdd  # Dislike retagged/obfuscated groups
+                    - 6a7b462c6caee4a991a9d8aa38ce2405  # Dislike release ending: en
+                    - 236a3626a07cacf5692c73cc947bc280  # Dislike release containing: 1-
+                    - cec8880b847dd5d31d29167ee0112b57  # Ignore 720p/1080p HEVC re-encodes (Golden Rule)
+                    - 436f5a7d08fbf02ba25cb5e5dfe98e55  # Ignore Dolby Vision without HDR10 fallback
+                    - f3f0f3691c6a1988d4a02963e69d11f2  # Ignore The Group -SCENE
+                    - 5bc23c3a055a1a5d8bbe4fb49d80e0cb  # Ignore so-called scene releases
+                    - 538bad00ee6f8aced8e0db5218b8484c  # Ignore Bad Dual Audio Groups
+                    - 4861d8238f9234606df6721df6e27deb  # Ignore AV1
         download_clients:
           definitions:
             "Transmission (HD Shows)":
@@ -273,7 +245,7 @@ sonarr:
             S{season:00}E{episode:00}
             -
             {Episode CleanTitle}
-            {[Quality Full]}
+            [{Preferred Words }{Quality Full}]
             {[MediaInfo VideoDynamicRangeType]}
             [{MediaInfo VideoBitDepth}bit]
             {[MediaInfo VideoCodec]}
@@ -286,7 +258,7 @@ sonarr:
             {Air-Date}
             -
             {Episode CleanTitle}
-            {[Quality Full]}
+            [{Preferred Words }{Quality Full}]
             {[MediaInfo VideoDynamicRangeType]}
             [{MediaInfo VideoBitDepth}bit]
             {[MediaInfo VideoCodec]}
@@ -301,7 +273,7 @@ sonarr:
             {absolute:000}
             -
             {Episode CleanTitle}
-            {[Quality Full]}
+            [{Preferred Words }{Quality Full}]
             {[MediaInfo VideoDynamicRangeType]}
             [{MediaInfo VideoBitDepth}bit]
             {[MediaInfo VideoCodec]}
@@ -311,32 +283,58 @@ sonarr:
           root_folders:
             - "/data/media/shows"
         profiles:
+          quality_profiles:
+            definitions:
+              "4K Shows":
+                upgrades_allowed: true
+                upgrade_until: "Bluray-2160p"
+                qualities:
+                  - "Bluray-2160p"
+                  - name: "WEB 2160p"
+                    members:
+                      - "WEBRip-2160p"
+                      - "WEBDL-2160p"
+                  - "HDTV-2160p"
+          language_profiles:
+            definitions:
+              "English":
+                upgrades_allowed: false
+                languages:
+                  - "English"
           release_profiles:
             delete_unmanaged: true
             definitions:
               "Release Sources (Streaming Service)":
                 trash_id: 1B018E0C53EC825085DD911102E2CA36
+                strict_negative_scores: false
+                include_preferred_when_renaming: true
               "P2P Groups + Repack/Proper":
                 trash_id: 71899E6C303A07AF0E4746EFF9873532
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
               "Low Quality Groups":
                 trash_id: EBC725268D687D588A20CBC5F97E538B
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
               "Optionals":
                 trash_id: 76e060895c5b8a765c310933da0a5357
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
                 filter:
                   include:
-                    - fa47da3377076d82d07c4e95b3f13d07 # Prefer Dolby Vision (HDR)
-                    - bc7a6383cbe88c3ee2d6396e1aacc0b3 # Prefer HDR
-                    - ea83f4740cec4df8112f3d6dd7c82751 # Prefer Season Packs
-                    - 6f2aefa61342a63387f2a90489e90790 # Dislike renamed/retagged releases
-                    - 19cd5ecc0a24bf493a75e80a51974cdd # Dislike retagged/obfuscated groups
-                    - 6a7b462c6caee4a991a9d8aa38ce2405 # Dislike release ending: en
-                    - 236a3626a07cacf5692c73cc947bc280 # Dislike release containing: 1-
-                    # - cec8880b847dd5d31d29167ee0112b57 # Ignore 720p/1080p HEVC re-encodes (Golden Rule)
-                    - 436f5a7d08fbf02ba25cb5e5dfe98e55 # Ignore Dolby Vision without HDR10 fallback
-                    - f3f0f3691c6a1988d4a02963e69d11f2 # Ignore The Group -SCENE
-                    - 5bc23c3a055a1a5d8bbe4fb49d80e0cb # Ignore so-called scene releases
-                    - 538bad00ee6f8aced8e0db5218b8484c # Ignore Bad Dual Audio Groups
-                    - 4861d8238f9234606df6721df6e27deb # Ignore AV1
+                    - fa47da3377076d82d07c4e95b3f13d07  # Prefer Dolby Vision (HDR)
+                    - bc7a6383cbe88c3ee2d6396e1aacc0b3  # Prefer HDR
+                    - ea83f4740cec4df8112f3d6dd7c82751  # Prefer Season Packs
+                    - 6f2aefa61342a63387f2a90489e90790  # Dislike renamed/retagged releases
+                    - 19cd5ecc0a24bf493a75e80a51974cdd  # Dislike retagged/obfuscated groups
+                    - 6a7b462c6caee4a991a9d8aa38ce2405  # Dislike release ending: en
+                    - 236a3626a07cacf5692c73cc947bc280  # Dislike release containing: 1-
+                    # - cec8880b847dd5d31d29167ee0112b57  # Ignore 720p/1080p HEVC re-encodes (Golden Rule)
+                    - 436f5a7d08fbf02ba25cb5e5dfe98e55  # Ignore Dolby Vision without HDR10 fallback
+                    - f3f0f3691c6a1988d4a02963e69d11f2  # Ignore The Group -SCENE
+                    - 5bc23c3a055a1a5d8bbe4fb49d80e0cb  # Ignore so-called scene releases
+                    - 538bad00ee6f8aced8e0db5218b8484c  # Ignore Bad Dual Audio Groups
+                    - 4861d8238f9234606df6721df6e27deb  # Ignore AV1
         download_clients:
           definitions:
             "Transmission (4K Shows)":
@@ -365,23 +363,59 @@ sonarr:
           root_folders:
             - "/data/media/anime"
         profiles:
+          quality_profiles:
+            definitions:
+              "HD/SD Anime Shows":
+                upgrades_allowed: true
+                upgrade_until: "Bluray-1080p Remux"
+                qualities:
+                  - "Bluray-1080p Remux"
+                  - "Bluray-1080p"
+                  - name: "WEB 1080p"
+                    members:
+                      - "WEBRip-1080p"
+                      - "WEBDL-1080p"
+                  - "HDTV-1080p"
+                  - "Bluray-720p"
+                  - name: "WEB 720p"
+                    members:
+                      - "WEBRip-720p"
+                      - "WEBDL-720p"
+                  - "HDTV-720p"
+                  - "Raw-HD"
+                  - "Bluray-480p"
+                  - "DVD"
+                  - name: "WEB 480p"
+                    members:
+                      - "WEBRip-480p"
+                      - "WEBDL-480p"
+                  - "SDTV"
+          language_profiles:
+            definitions:
+              "Anime":
+                upgrades_allowed: true
+                upgrade_until: "Japanese"
+                languages:
+                  - "Japanese"
+                  - "English"
           release_profiles:
-            delete_unmanaged: true
             definitions:
               "Anime Profile 1":
-                #   * Prefer uncensored
-                #   * Prefer Multi-Audio or Dual-Audio
+                # - Prefer uncensored
+                # - Prefer Multi-Audio or Dual-Audio
                 # https://trash-guides.info/Sonarr/Sonarr-Release-Profile-RegEx-Anime/#first-release-profile
                 trash_id: d428eda85af1df8904b4bbe4fc2f537c
-                strict_negative_scores: true
+                strict_negative_scores: false
+                include_preferred_when_renaming: true
               "Anime Profile 2":
                 # Prioritise/ignore releases based on group.
                 # TODO: May need to adjust based on actual results.
                 # https://trash-guides.info/Sonarr/Sonarr-Release-Profile-RegEx-Anime/#second-release-profile
                 trash_id: 6cd9e10bb5bb4c63d2d7cd3279924c7b
-                strict_negative_scores: true
+                strict_negative_scores: false
+                include_preferred_when_renaming: false  # Consistent with guide.
         quality:
-          trash_id: "387e6278d8e06083d813358762e0ac63" # anime
+          trash_id: "387e6278d8e06083d813358762e0ac63"  # anime
         download_clients:
           definitions:
             "Transmission (Anime)":
