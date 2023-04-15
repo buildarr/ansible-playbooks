@@ -2,7 +2,7 @@
 
 # Arr stack container URIs and tags.
 arrstack_buildarr_container_uri: "callum027/buildarr"
-arrstack_buildarr_container_tag: "0.4.4"
+arrstack_buildarr_container_tag: "0.4.5"
 arrstack_sonarr_container_uri: "lscr.io/linuxserver/sonarr"
 arrstack_sonarr_container_tag: "3.0.10"
 arrstack_prowlarr_container_uri: "lscr.io/linuxserver/prowlarr"
